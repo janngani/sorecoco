@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "users": {
+      "title": "User Profile",
+      "description": "Stores user profile information and roles.",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "accountNumber": { "type": "string" },
+        "role": { "type": "string", "enum": ["consumer", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "uid": { "type": "string" }
+      },
+      "required": ["fullName", "email", "accountNumber", "role", "uid"]
+    },
+    "tickets": {
+      "title": "Service Ticket",
+      "description": "Represents a billing dispute or reconnection request.",
+      "type": "object",
+      "properties": {
+        "consumerId": { "type": "string" },
+        "consumerName": { "type": "string" },
+        "accountNumber": { "type": "string" },
+        "type": { "type": "string", "enum": ["billing", "reconnection"] },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "reviewing", "dispatched", "resolved"] },
+        "createdAt": { "type": "object" },
+        "evidenceImage": { "type": "string", "description": "Base64 or URL of the evidence image" },
+        "checklist": { "type": "object" },
+        "messages": { "type": "array" },
+        "feedback": {
+          "type": "object",
+          "properties": {
+            "rating": { "type": "number" },
+            "comment": { "type": "string" },
+            "createdAt": { "type": "string", "format": "date-time" }
+          }
+        }
+      },
+      "required": ["consumerId", "type", "status", "createdAt"]
+    },
+    "announcements": {
+      "title": "Announcement",
+      "description": "Official power interruption notices or news.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "createdAt": { "type": "object" }
+      },
+      "required": ["title", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "users",
+      "description": "User profile documents"
+    },
+    "/tickets/{ticketId}": {
+      "schema": "tickets",
+      "description": "Service request tickets"
+    },
+    "/announcements/{announcementId}": {
+      "schema": "announcements",
+      "description": "Official announcements"
+    }
+  }
+}
