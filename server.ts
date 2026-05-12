@@ -18,7 +18,7 @@ if (!JWT_SECRET) {
   console.warn('WARNING: JWT_SECRET is not defined in environment variables. Falling back to insecure default for development.');
 }
 const SECRET = JWT_SECRET || 'soreco-portal-fallback-secret-2026';
-const PORT = 3000;
+const PORT = 10000;
 
 // Initialize Database
 const db = new Database('database.sqlite');
